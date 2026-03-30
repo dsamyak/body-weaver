@@ -121,10 +121,10 @@ const HumanBodyScene = ({ selectedPart, hoveredPart, activeSystem, onSelectPart,
 
       <EffectComposer>
         <Bloom 
-          luminanceThreshold={0.85} 
+          luminanceThreshold={0.9} 
           luminanceSmoothing={0.1}
           mipmapBlur 
-          intensity={1.8} 
+          intensity={1.2} 
         />
       </EffectComposer>
     </Canvas>

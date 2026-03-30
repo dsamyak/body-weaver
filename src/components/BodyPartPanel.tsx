@@ -26,8 +26,8 @@ const BodyPartPanel = ({ part, onClose }: BodyPartPanelProps) => {
           transition={{ duration: 0.4, type: 'spring', damping: 25, stiffness: 200 }}
           className="absolute top-6 right-6 w-96 glass-panel rounded-2xl p-6 shadow-[0_0_40px_rgba(0,0,0,0.5)] z-10 overflow-hidden"
         >
-          <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -z-10 translate-x-1/2 -translate-y-1/2" />
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-accent/10 rounded-full blur-2xl -z-10 -translate-x-1/2 translate-y-1/2" />
+          <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-xl -z-10 translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 left-0 w-24 h-24 bg-accent/20 rounded-full blur-lg -z-10 -translate-x-1/2 translate-y-1/2" />
           
           <button onClick={onClose} className="absolute top-4 right-4 text-muted-foreground/60 hover:text-white transition-colors bg-white/5 hover:bg-white/10 p-1.5 rounded-full backdrop-blur-md">
             <X className="w-4 h-4" />
