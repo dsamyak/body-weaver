@@ -123,21 +123,25 @@ const fragmentShader = `
     
     // Enhanced Futuristic Coloring
     vec3 coreColor = color * 0.2; // Deeper holographic core
-    vec3 rimColor = color * 1.8;  // Extremely bright edges
+    vec3 rimColor = color * 2.0;  // Extremely bright edges
     vec3 blendedColor = mix(coreColor, rimColor, fresnel);
     
-    vec3 finalColor = blendedColor + (color * scanLine * 1.5) + (color * noiseVal * 1.2);
+    // Use the emissiveIntensity uniform (which lerps up on hover) to create a visual "fill" effect
+    float hoverBoost = smoothstep(0.1, 0.7, emissiveIntensity);
+    
+    vec3 finalColor = blendedColor + (color * scanLine * 1.5) + (color * noiseVal * 1.2) + (color * hoverBoost * 0.8);
     
     // Adjust opacity: transparent center, opaque edges
-    float finalOpacity = (fresnel * 0.8 + scanLine * 0.5 + noiseVal * 0.4) * opacity;
+    float baseOpacity = fresnel * 0.8 + scanLine * 0.5 + noiseVal * 0.4;
+    float finalOpacity = (baseOpacity + hoverBoost * 0.6) * opacity;
     finalOpacity = clamp(finalOpacity, 0.05, 1.0);
     
     // Darker inside for non-organs (bones) to let them look like x-ray ghosts
     if (isOrgan < 0.5) {
-       finalOpacity *= 0.6;
+       finalOpacity *= 0.6 + (hoverBoost * 0.4); // Less ghosting if hovered
     }
 
-    // emissiveIntensity boosts everything
+    // emissiveIntensity boosts the overall brightness
     gl_FragColor = vec4(finalColor * emissiveIntensity * 2.5, finalOpacity);
   }
 `;
@@ -227,8 +231,8 @@ const BodyPart3D = ({ part, isSelected, isFiltered, onSelect, onHover, isHovered
     if (!groupRef.current) return;
     const t = state.clock.elapsedTime + timeOffset;
 
-    const targetEmissive = isSelected ? 1.0 : (localHover || isHovered) ? 0.6 : 0.05;
-    const targetOpacity = isFiltered ? 1.0 : 0.05;
+    const targetEmissive = isSelected ? 1.0 : (localHover || isHovered) ? 0.8 : 0.05;
+    const targetOpacity = isFiltered ? 1.0 : ((localHover || isHovered) ? 0.8 : 0.04);
 
     groupRef.current.traverse((child) => {
       if ((child as THREE.Mesh).isMesh || (child as THREE.InstancedMesh).isInstancedMesh) {
