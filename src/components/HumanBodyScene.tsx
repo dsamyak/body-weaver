@@ -80,7 +80,7 @@ const HumanBodyScene = ({ selectedPart, hoveredPart, activeSystem, onSelectPart,
     <Canvas
       camera={{ position: [0, 1.5, 6], fov: 45 }}
       style={{ background: 'transparent' }}
-      onClick={() => onSelectPart('')}
+      onPointerMissed={() => onSelectPart('')}
       shadows
     >
       <AnimatedLights />
