@@ -13,13 +13,13 @@ interface BodyPart3DProps {
 }
 
 const getAnimConfig = (id: string) => {
-  if (['ribcage', 'lungs', 'heart', 'stomach', 'liver'].includes(id))
-    return { breathe: 0.03, pulse: id === 'heart' ? 0.06 : 0, speed: id === 'heart' ? 4.5 : 1.2 };
-  if (['skull', 'brain', 'eyes', 'neck'].includes(id))
-    return { breathe: 0.008, pulse: 0, speed: 0.8, bobY: 0.008 };
+  if (id === 'heart') return { breathe: 0, pulse: 1, speed: 1.5, type: 'heartbeat' };
+  if (['lungs', 'ribcage'].includes(id)) return { breathe: 0.05, pulse: 0, speed: 2.0, type: 'breath' };
+  if (['stomach', 'liver'].includes(id)) return { breathe: 0.02, pulse: 0, speed: 2.0, type: 'breath' };
+  if (['skull', 'brain', 'eyes', 'neck'].includes(id)) return { breathe: 0.008, pulse: 0, speed: 0.8, bobY: 0.008, type: 'float' };
   if (id.includes('arm') || id.includes('hand') || id.includes('shoulder') || id.includes('leg') || id.includes('foot'))
-    return { breathe: 0, pulse: 0, speed: 1, sway: 0.012 };
-  return { breathe: 0.005, pulse: 0, speed: 1 };
+    return { breathe: 0, pulse: 0, speed: 1, sway: 0.012, type: 'sway' };
+  return { breathe: 0.005, pulse: 0, speed: 1, type: 'default' };
 };
 
 const vertexShader = `
@@ -224,43 +224,68 @@ const BodyPart3D = ({ part, isSelected, isFiltered, onSelect, onHover, isHovered
   const basePos = useMemo(() => new THREE.Vector3(...part.position), [part.position]);
   const baseScale = useMemo(() => new THREE.Vector3(...part.scale), [part.scale]);
   const timeOffset = useMemo(() => Math.random() * Math.PI * 2, []);
+  const materialsRef = useRef<any[]>([]);
 
   const isOrgan = ['brain', 'heart', 'lungs', 'stomach', 'liver', 'kidneys', 'intestines', 'eyes'].includes(part.id);
+
+  useLayoutEffect(() => {
+    const materials: any[] = [];
+    if (groupRef.current) {
+      groupRef.current.traverse((child) => {
+        if ((child as THREE.Mesh).isMesh || (child as THREE.InstancedMesh).isInstancedMesh) {
+          const mesh = child as THREE.Mesh;
+          if (mesh.material) materials.push(mesh.material);
+        }
+      });
+    }
+    materialsRef.current = materials;
+  }, [part.id]);
 
   useFrame((state, delta) => {
     if (!groupRef.current) return;
     const t = state.clock.elapsedTime + timeOffset;
 
-    const targetEmissive = isSelected ? 1.0 : (localHover || isHovered) ? 0.8 : 0.35;
+    const targetEmissive = isSelected ? 3.0 : (localHover || isHovered) ? 1.0 : 0.35;
     const targetOpacity = isFiltered ? 1.0 : ((localHover || isHovered) ? 0.8 : 0.08);
 
-    groupRef.current.traverse((child) => {
-      if ((child as THREE.Mesh).isMesh || (child as THREE.InstancedMesh).isInstancedMesh) {
-        const mesh = child as THREE.Mesh;
-        if (mesh.material) {
-          const mat = mesh.material as any;
-          if (mat.uniforms) {
-            if (mat.uniforms.emissiveIntensity) {
-              mat.uniforms.emissiveIntensity.value = THREE.MathUtils.lerp(mat.uniforms.emissiveIntensity.value, targetEmissive, delta * 8);
-            }
-            if (mat.uniforms.opacity) {
-              mat.uniforms.opacity.value = THREE.MathUtils.lerp(mat.uniforms.opacity.value, targetOpacity, delta * 6);
-            }
-            if (mat.uniforms.time) {
-              mat.uniforms.time.value = t;
-            }
-          }
+    for (const mat of materialsRef.current) {
+      if (mat.uniforms) {
+        if (mat.uniforms.emissiveIntensity) {
+          mat.uniforms.emissiveIntensity.value = THREE.MathUtils.lerp(mat.uniforms.emissiveIntensity.value, targetEmissive, delta * 8);
+        }
+        if (mat.uniforms.opacity) {
+          mat.uniforms.opacity.value = THREE.MathUtils.lerp(mat.uniforms.opacity.value, targetOpacity, delta * 6);
+        }
+        if (mat.uniforms.time) {
+          mat.uniforms.time.value = t;
         }
       }
-    });
+    }
 
-    const breatheFactor = 1 + Math.sin(t * animConfig.speed) * animConfig.breathe;
-    const pulseFactor = animConfig.pulse ? 1 + Math.sin(t * animConfig.speed) * animConfig.pulse : 1;
-    groupRef.current.scale.set(
-      baseScale.x * breatheFactor * pulseFactor,
-      baseScale.y * breatheFactor,
-      baseScale.z * breatheFactor * pulseFactor
-    );
+    let scaleX = baseScale.x;
+    let scaleY = baseScale.y;
+    let scaleZ = baseScale.z;
+
+    if (animConfig.type === 'heartbeat') {
+      const beatCycle = (t * animConfig.speed) % (Math.PI * 2);
+      let pulse = Math.pow(Math.max(0, Math.sin(beatCycle * 2)), 8) * 0.15;
+      pulse += Math.pow(Math.max(0, Math.sin((beatCycle + 0.3) * 2)), 8) * 0.1;
+      scaleX *= (1 + pulse);
+      scaleY *= (1 + pulse);
+      scaleZ *= (1 + pulse);
+    } else if (animConfig.type === 'breath') {
+      const breathCycle = Math.sin(t * animConfig.speed);
+      scaleX *= (1 + breathCycle * animConfig.breathe * 1.5);
+      scaleY *= (1 + breathCycle * animConfig.breathe * 0.5);
+      scaleZ *= (1 + breathCycle * animConfig.breathe * 1.2);
+    } else {
+      const breatheFactor = 1 + Math.sin(t * animConfig.speed) * animConfig.breathe;
+      scaleX *= breatheFactor;
+      scaleY *= breatheFactor;
+      scaleZ *= breatheFactor;
+    }
+
+    groupRef.current.scale.set(scaleX, scaleY, scaleZ);
 
     const bobY = animConfig.bobY ? Math.sin(t * 0.8) * animConfig.bobY : 0;
     const sway = animConfig.sway ? Math.sin(t * 0.6) * animConfig.sway : 0;
