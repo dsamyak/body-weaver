@@ -20,7 +20,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [0, 3.6, 0],
     scale: [0.55, 0.65, 0.6],
     shape: 'sphere',
-    color: '#e8d5b7',
+    color: '#00b8ff',
     details: ['Contains 22 bones', 'Protects the brain', 'Houses sensory organs', 'Weight: ~1 kg'],
   },
   {
@@ -31,7 +31,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [0, 3.7, 0],
     scale: [0.42, 0.48, 0.45],
     shape: 'sphere',
-    color: '#f0a0a0',
+    color: '#cc44ff',
     details: ['~86 billion neurons', 'Weighs ~1.4 kg', 'Uses 20% of body oxygen', '3 main parts: cerebrum, cerebellum, brainstem'],
   },
   {
@@ -42,7 +42,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [0, 3.65, 0.35],
     scale: [0.45, 0.12, 0.12],
     shape: 'box',
-    color: '#4a90d9',
+    color: '#ffffff',
     details: ['~576 megapixels equivalent', '6 extraocular muscles each', 'Can distinguish ~10M colors', 'Blinks ~15-20 times/min'],
   },
   {
@@ -53,7 +53,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [0, 3.0, 0],
     scale: [0.18, 0.3, 0.18],
     shape: 'cylinder',
-    color: '#e8d5b7',
+    color: '#00b8ff',
     details: ['7 cervical vertebrae', 'Contains carotid arteries', 'Houses the trachea & esophagus', 'Supports ~5 kg head'],
   },
 
@@ -66,7 +66,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [0, 2.2, 0],
     scale: [0.7, 0.8, 0.4],
     shape: 'box',
-    color: '#d4c4a8',
+    color: '#0088cc',
     details: ['12 pairs of ribs', 'Protects heart & lungs', 'Aids in breathing', 'Connected to thoracic vertebrae'],
   },
   {
@@ -77,7 +77,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [-0.15, 2.3, 0.1],
     scale: [0.22, 0.25, 0.2],
     shape: 'sphere',
-    color: '#c0392b',
+    color: '#ff1155',
     details: ['Beats ~100,000 times/day', '4 chambers', 'Pumps ~5L blood/min', 'Weight: ~300g'],
   },
   {
@@ -88,7 +88,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [0, 2.3, 0],
     scale: [0.65, 0.6, 0.35],
     shape: 'box',
-    color: '#e8a0b0',
+    color: '#00ffcc',
     details: ['~300 million alveoli', 'Surface area: ~70 m²', 'Right lung has 3 lobes', 'Left lung has 2 lobes'],
   },
   {
@@ -99,7 +99,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [0, 1.8, -0.2],
     scale: [0.12, 1.8, 0.12],
     shape: 'cylinder',
-    color: '#d4c4a8',
+    color: '#0088cc',
     details: ['33 vertebrae', '4 natural curves', 'Protects spinal cord', 'Allows flexibility & movement'],
   },
   {
@@ -110,7 +110,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [0.15, 1.6, 0.1],
     scale: [0.3, 0.25, 0.22],
     shape: 'sphere',
-    color: '#e67e22',
+    color: '#ff8800',
     details: ['Capacity: ~1 liter', 'pH of gastric acid: 1.5-3.5', 'Churns food 3x/min', 'Lined with mucus membrane'],
   },
   {
@@ -121,7 +121,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [-0.25, 1.7, 0.1],
     scale: [0.35, 0.2, 0.22],
     shape: 'box',
-    color: '#8b4513',
+    color: '#ffcc00',
     details: ['Weighs ~1.5 kg', '500+ functions', 'Produces bile', 'Can regenerate itself'],
   },
   {
@@ -132,7 +132,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [0, 1.4, -0.15],
     scale: [0.55, 0.18, 0.15],
     shape: 'box',
-    color: '#a0522d',
+    color: '#ff4400',
     details: ['Filter ~180L blood/day', '~1 million nephrons each', 'Produce 1-2L urine/day', 'Regulate blood pressure'],
   },
   {
@@ -143,7 +143,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [0, 1.1, 0.05],
     scale: [0.5, 0.4, 0.3],
     shape: 'box',
-    color: '#d4956a',
+    color: '#ffaa33',
     details: ['Small intestine: ~6m long', 'Large intestine: ~1.5m', 'Surface area: ~32 m²', '~100 trillion gut bacteria'],
   },
   {
@@ -154,7 +154,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [0, 0.7, 0],
     scale: [0.6, 0.35, 0.35],
     shape: 'box',
-    color: '#d4c4a8',
+    color: '#0088cc',
     details: ['3 fused bones per side', 'Supports body weight', 'Protects reproductive organs', 'Differs between sexes'],
   },
 
@@ -167,7 +167,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [-0.65, 2.7, 0],
     scale: [0.2, 0.2, 0.2],
     shape: 'sphere',
-    color: '#e8d5b7',
+    color: '#00b8ff',
     details: ['Ball-and-socket joint', '4 rotator cuff muscles', '360° range of motion', 'Most commonly dislocated joint'],
   },
   {
@@ -178,7 +178,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [0.65, 2.7, 0],
     scale: [0.2, 0.2, 0.2],
     shape: 'sphere',
-    color: '#e8d5b7',
+    color: '#00b8ff',
     details: ['Ball-and-socket joint', '4 rotator cuff muscles', '360° range of motion', 'Most commonly dislocated joint'],
   },
   {
@@ -189,7 +189,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [-0.75, 2.2, 0],
     scale: [0.12, 0.5, 0.12],
     shape: 'cylinder',
-    color: '#e8d5b7',
+    color: '#00b8ff',
     details: ['Contains humerus bone', 'Biceps & triceps muscles', 'Brachial artery', 'Major nerve pathways'],
   },
   {
@@ -200,7 +200,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [0.75, 2.2, 0],
     scale: [0.12, 0.5, 0.12],
     shape: 'cylinder',
-    color: '#e8d5b7',
+    color: '#00b8ff',
     details: ['Contains humerus bone', 'Biceps & triceps muscles', 'Brachial artery', 'Major nerve pathways'],
   },
   {
@@ -211,7 +211,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [-0.8, 1.55, 0],
     scale: [0.1, 0.45, 0.1],
     shape: 'cylinder',
-    color: '#e8d5b7',
+    color: '#00b8ff',
     details: ['Radius & ulna bones', 'Allows pronation/supination', '20+ muscles', 'Contains radial artery'],
   },
   {
@@ -222,7 +222,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [0.8, 1.55, 0],
     scale: [0.1, 0.45, 0.1],
     shape: 'cylinder',
-    color: '#e8d5b7',
+    color: '#00b8ff',
     details: ['Radius & ulna bones', 'Allows pronation/supination', '20+ muscles', 'Contains radial artery'],
   },
   {
@@ -233,7 +233,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [-0.85, 1.05, 0],
     scale: [0.12, 0.18, 0.06],
     shape: 'box',
-    color: '#e8d5b7',
+    color: '#00b8ff',
     details: ['27 bones', '34 muscles', '~17,000 touch receptors', 'Most dexterous body part'],
   },
   {
@@ -244,7 +244,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [0.85, 1.05, 0],
     scale: [0.12, 0.18, 0.06],
     shape: 'box',
-    color: '#e8d5b7',
+    color: '#00b8ff',
     details: ['27 bones', '34 muscles', '~17,000 touch receptors', 'Most dexterous body part'],
   },
 
@@ -257,7 +257,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [-0.22, 0.15, 0],
     scale: [0.15, 0.55, 0.15],
     shape: 'cylinder',
-    color: '#e8d5b7',
+    color: '#00b8ff',
     details: ['Femur: longest bone', 'Quadriceps & hamstrings', 'Femoral artery', 'Supports body weight'],
   },
   {
@@ -268,7 +268,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [0.22, 0.15, 0],
     scale: [0.15, 0.55, 0.15],
     shape: 'cylinder',
-    color: '#e8d5b7',
+    color: '#00b8ff',
     details: ['Femur: longest bone', 'Quadriceps & hamstrings', 'Femoral artery', 'Supports body weight'],
   },
   {
@@ -279,7 +279,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [-0.22, -0.4, 0.05],
     scale: [0.16, 0.14, 0.16],
     shape: 'sphere',
-    color: '#d4c4a8',
+    color: '#0088cc',
     details: ['Largest joint', 'Contains patella (kneecap)', '4 major ligaments', 'Meniscus for cushioning'],
   },
   {
@@ -290,7 +290,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [0.22, -0.4, 0.05],
     scale: [0.16, 0.14, 0.16],
     shape: 'sphere',
-    color: '#d4c4a8',
+    color: '#0088cc',
     details: ['Largest joint', 'Contains patella (kneecap)', '4 major ligaments', 'Meniscus for cushioning'],
   },
   {
@@ -301,7 +301,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [-0.22, -1.05, 0],
     scale: [0.12, 0.55, 0.12],
     shape: 'cylinder',
-    color: '#e8d5b7',
+    color: '#00b8ff',
     details: ['Tibia & fibula bones', 'Calf muscles (gastrocnemius)', 'Achilles tendon', 'Bears full body weight'],
   },
   {
@@ -312,7 +312,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [0.22, -1.05, 0],
     scale: [0.12, 0.55, 0.12],
     shape: 'cylinder',
-    color: '#e8d5b7',
+    color: '#00b8ff',
     details: ['Tibia & fibula bones', 'Calf muscles (gastrocnemius)', 'Achilles tendon', 'Bears full body weight'],
   },
   {
@@ -323,7 +323,7 @@ export const bodyPartsData: BodyPartData[] = [
     position: [-0.22, -1.55, 0.1],
     scale: [0.14, 0.08, 0.28],
     shape: 'box',
-    color: '#e8d5b7',
+    color: '#00b8ff',
     details: ['26 bones', '33 joints', '~8,000 steps/day avg', '3 arches for support'],
   },
   {
@@ -334,20 +334,20 @@ export const bodyPartsData: BodyPartData[] = [
     position: [0.22, -1.55, 0.1],
     scale: [0.14, 0.08, 0.28],
     shape: 'box',
-    color: '#e8d5b7',
+    color: '#00b8ff',
     details: ['26 bones', '33 joints', '~8,000 steps/day avg', '3 arches for support'],
   },
 ];
 
 export const bodySystems = [
   { id: 'all', name: 'All Systems', color: '#00d4aa' },
-  { id: 'Skeletal', name: 'Skeletal', color: '#d4c4a8' },
-  { id: 'Muscular', name: 'Muscular', color: '#c0392b' },
-  { id: 'Nervous', name: 'Nervous', color: '#f0a0a0' },
-  { id: 'Cardiovascular', name: 'Cardiovascular', color: '#c0392b' },
-  { id: 'Respiratory', name: 'Respiratory', color: '#e8a0b0' },
-  { id: 'Digestive', name: 'Digestive', color: '#e67e22' },
-  { id: 'Urinary', name: 'Urinary', color: '#a0522d' },
-  { id: 'Sensory', name: 'Sensory', color: '#4a90d9' },
-  { id: 'Skeletal/Muscular', name: 'Skeletal/Muscular', color: '#e8d5b7' },
+  { id: 'Skeletal', name: 'Skeletal', color: '#0088cc' },
+  { id: 'Muscular', name: 'Muscular', color: '#ff1155' },
+  { id: 'Nervous', name: 'Nervous', color: '#cc44ff' },
+  { id: 'Cardiovascular', name: 'Cardiovascular', color: '#ff1155' },
+  { id: 'Respiratory', name: 'Respiratory', color: '#00ffcc' },
+  { id: 'Digestive', name: 'Digestive', color: '#ff8800' },
+  { id: 'Urinary', name: 'Urinary', color: '#ff4400' },
+  { id: 'Sensory', name: 'Sensory', color: '#ffffff' },
+  { id: 'Skeletal/Muscular', name: 'Skeletal/Muscular', color: '#00b8ff' },
 ];

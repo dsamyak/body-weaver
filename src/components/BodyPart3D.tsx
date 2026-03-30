@@ -121,10 +121,15 @@ const fragmentShader = `
       noiseVal = smoothstep(0.6, 0.8, noiseVal) * 1.0;
     }
     
-    vec3 finalColor = color * (fresnel + scanLine + noiseVal);
+    // Enhanced Futuristic Coloring
+    vec3 coreColor = color * 0.2; // Deeper holographic core
+    vec3 rimColor = color * 1.8;  // Extremely bright edges
+    vec3 blendedColor = mix(coreColor, rimColor, fresnel);
+    
+    vec3 finalColor = blendedColor + (color * scanLine * 1.5) + (color * noiseVal * 1.2);
     
     // Adjust opacity: transparent center, opaque edges
-    float finalOpacity = (fresnel * 0.8 + scanLine * 0.4 + noiseVal * 0.3) * opacity;
+    float finalOpacity = (fresnel * 0.8 + scanLine * 0.5 + noiseVal * 0.4) * opacity;
     finalOpacity = clamp(finalOpacity, 0.05, 1.0);
     
     // Darker inside for non-organs (bones) to let them look like x-ray ghosts
@@ -132,7 +137,8 @@ const fragmentShader = `
        finalOpacity *= 0.6;
     }
 
-    gl_FragColor = vec4(finalColor * emissiveIntensity * 2.0, finalOpacity);
+    // emissiveIntensity boosts everything
+    gl_FragColor = vec4(finalColor * emissiveIntensity * 2.5, finalOpacity);
   }
 `;
 
@@ -263,10 +269,12 @@ const BodyPart3D = ({ part, isSelected, isFiltered, onSelect, onHover, isHovered
 
   const renderMaterial = (isInstanced = false) => {
     return (
+      // @ts-ignore - The instancing prop is valid on ShaderMaterial instances but missing from R3F types
       <shaderMaterial
         transparent
         depthWrite={false}
         blending={THREE.AdditiveBlending}
+        // @ts-ignore - The instancing prop is valid on ShaderMaterial instances but missing from R3F types
         instancing={isInstanced}
         uniforms={{
           time: { value: 0 },
