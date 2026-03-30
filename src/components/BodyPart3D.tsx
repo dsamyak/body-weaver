@@ -6,6 +6,7 @@ import { BodyPartData } from '@/data/bodyParts';
 interface BodyPart3DProps {
   part: BodyPartData;
   isSelected: boolean;
+  hasSelection: boolean;
   isFiltered: boolean;
   onSelect: (id: string) => void;
   onHover: (id: string | null) => void;
@@ -217,7 +218,7 @@ const RibcageInstances = ({ material }: { material: any }) => {
   );
 };
 
-const BodyPart3D = ({ part, isSelected, isFiltered, onSelect, onHover, isHovered }: BodyPart3DProps) => {
+const BodyPart3D = ({ part, isSelected, hasSelection, isFiltered, onSelect, onHover, isHovered }: BodyPart3DProps) => {
   const groupRef = useRef<THREE.Group>(null);
   const [localHover, setLocalHover] = useState(false);
   const animConfig = useMemo(() => getAnimConfig(part.id), [part.id]);
@@ -423,6 +424,7 @@ const BodyPart3D = ({ part, isSelected, isFiltered, onSelect, onHover, isHovered
       ref={groupRef}
       position={part.position}
       scale={part.scale}
+      visible={!hasSelection || isSelected}
       onClick={(e) => { e.stopPropagation(); onSelect(part.id); }}
       onPointerOver={(e) => { e.stopPropagation(); setLocalHover(true); onHover(part.id); document.body.style.cursor = 'pointer'; }}
       onPointerOut={() => { setLocalHover(false); onHover(null); document.body.style.cursor = 'default'; }}

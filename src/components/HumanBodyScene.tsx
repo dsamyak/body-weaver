@@ -93,6 +93,7 @@ const HumanBodyScene = ({ selectedPart, hoveredPart, activeSystem, onSelectPart,
               key={part.id}
               part={part}
               isSelected={selectedPart === part.id}
+              hasSelection={!!selectedPart}
               isFiltered={activeSystem === 'all' || part.system.includes(activeSystem)}
               onSelect={onSelectPart}
               onHover={onHoverPart}
