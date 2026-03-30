@@ -28,17 +28,48 @@ const vertexShader = `
   varying vec3 vNormal;
   varying vec3 vPosition;
   varying vec3 vViewPosition;
+  varying float vFolds;
+  
+  uniform float isBrain;
+  uniform float time;
   
   void main() {
     #include <beginnormal_vertex>
     #include <defaultnormal_vertex>
     #include <begin_vertex>
+    
+    float foldIntensity = 0.0;
+    
+    if (isBrain > 0.5) {
+      // Base structural scaling (oblong shape like a real brain)
+      transformed.x *= 0.9;
+      transformed.y *= 0.8;
+      transformed.z *= 1.1;
+      
+      // The Longitudinal Fissure (deep valley separating left/right hemispheres)
+      float fissureDist = abs(transformed.x);
+      float fissureDepth = smoothstep(0.0, 0.25, fissureDist);
+      transformed.y -= (1.0 - fissureDepth) * 0.4;
+      transformed.x *= 0.9 + fissureDepth * 0.1;
+
+      // Gyri and Sulci (Organic Folds)
+      float foldX = sin(position.y * 18.0 + sin(position.z * 10.0) * 2.0);
+      float foldY = cos(position.x * 20.0 + sin(position.z * 12.0) * 1.5);
+      float foldZ = sin(position.x * 15.0 + cos(position.y * 15.0) * 2.5);
+      
+      float ridgePattern = sin((foldX + foldY + foldZ) * 4.0);
+      ridgePattern = smoothstep(-0.5, 1.0, ridgePattern);
+      
+      foldIntensity = ridgePattern * 0.08 * fissureDepth;
+      transformed += normal * foldIntensity;
+    }
+    
+    vFolds = foldIntensity;
+
     // project_vertex calculates mvPosition and gl_Position
     #include <project_vertex>
     
-    // We compute local position for scanning based on object space before transform
     vPosition = position;
-    
     vNormal = normalize(transformedNormal);
     vViewPosition = -mvPosition.xyz;
   }
@@ -50,10 +81,12 @@ const fragmentShader = `
   uniform float emissiveIntensity;
   uniform float opacity;
   uniform float isOrgan;
+  uniform float isBrain;
   
   varying vec3 vNormal;
   varying vec3 vPosition;
   varying vec3 vViewPosition;
+  varying float vFolds;
   
   // Basic 3D Simplex
   vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
@@ -103,47 +136,50 @@ const fragmentShader = `
   }
   
   void main() {
-    // Only attempt to read normal if length > 0
     vec3 normal = length(vNormal) > 0.0 ? normalize(vNormal) : vec3(0.0, 0.0, 1.0);
     vec3 viewDir = length(vViewPosition) > 0.0 ? normalize(vViewPosition) : vec3(0.0, 0.0, 1.0);
 
-    // Fresnel Edge Glow
     float fresnel = dot(normal, viewDir);
     fresnel = clamp(1.0 - fresnel, 0.0, 1.0);
-    fresnel = pow(fresnel, 2.5); // Sharp edges
+    fresnel = pow(fresnel, 2.5);
     
-    // Medical Scan Line
     float scan = fract(vPosition.y * 2.0 - time * 0.8);
     float scanLine = smoothstep(0.95, 1.0, scan) * 1.5;
     
-    // Procedural Veins / Folds
     float noiseVal = 0.0;
     if (isOrgan > 0.5) {
       noiseVal = snoise(vPosition * 8.0 + time * 0.1) * 0.5 + 0.5;
       noiseVal = smoothstep(0.6, 0.8, noiseVal) * 1.0;
     }
     
-    // Enhanced Futuristic Coloring
-    vec3 coreColor = color * 0.35; // Brighter core for solid readability
-    vec3 rimColor = color * 1.6;  // Bright edges
-    vec3 blendedColor = mix(coreColor, rimColor, fresnel);
+    vec3 coreColor = color * 0.35;
+    vec3 rimColor = color * 1.6;
+    float baseOpacity = 0.4 + (fresnel * 0.6) + (scanLine * 0.3) + (noiseVal * 0.3);
     
-    // Use the emissiveIntensity uniform (which lerps up on hover) to create a visual "fill" effect
+    if (isBrain > 0.5) {
+      float grooveShadow = smoothstep(0.01, 0.06, vFolds);
+      coreColor *= (0.2 + grooveShadow * 0.8);
+      
+      float spark = snoise(vPosition * 12.0 + vec3(time * 2.0, 0.0, 0.0));
+      spark = smoothstep(0.85, 1.0, spark) * grooveShadow * 3.5;
+      rimColor += vec3(0.2, 0.8, 1.0) * spark * 2.0; // Cyan electric pulses
+      baseOpacity += spark * 0.8;
+      
+      // Additional ambient boost for ridges
+      coreColor += color * (grooveShadow * 0.6);
+    }
+    
+    vec3 blendedColor = mix(coreColor, rimColor, fresnel);
     float hoverBoost = smoothstep(0.1, 0.7, emissiveIntensity);
     
     vec3 finalColor = blendedColor + (color * scanLine * 1.0) + (color * noiseVal * 0.8) + (color * hoverBoost * 0.6);
-    
-    // Adjust opacity: add a baseline of 0.4 so the physical volume of the body part is easily seen!
-    float baseOpacity = 0.4 + (fresnel * 0.6) + (scanLine * 0.3) + (noiseVal * 0.3);
     float finalOpacity = (baseOpacity + hoverBoost * 0.4) * opacity;
-    finalOpacity = clamp(finalOpacity, 0.15, 1.0); // Minimum 15% opacity to never vanish
+    finalOpacity = clamp(finalOpacity, 0.15, 1.0);
     
-    // Bones are just as important to see, so dim them only slightly
     if (isOrgan < 0.5) {
        finalOpacity *= 0.85 + (hoverBoost * 0.15); 
     }
 
-    // emissiveIntensity boosts the overall brightness
     gl_FragColor = vec4(finalColor * emissiveIntensity * 2.0, finalOpacity);
   }
 `;
@@ -331,7 +367,8 @@ const BodyPart3D = ({ part, isSelected, hasSelection, isFiltered, onSelect, onHo
           color: { value: new THREE.Color(part.color) },
           emissiveIntensity: { value: 0.1 },
           opacity: { value: 1.0 },
-          isOrgan: { value: isOrgan ? 1.0 : 0.0 }
+          isOrgan: { value: isOrgan ? 1.0 : 0.0 },
+          isBrain: { value: part.id === 'brain' ? 1.0 : 0.0 }
         }}
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
@@ -348,7 +385,7 @@ const BodyPart3D = ({ part, isSelected, hasSelection, isFiltered, onSelect, onHo
       case 'brain':
         return (
           <mesh>
-            <sphereGeometry args={[1, 64, 64]} />
+            <sphereGeometry args={[1, 160, 160]} />
             {renderMaterial()}
           </mesh>
         );
