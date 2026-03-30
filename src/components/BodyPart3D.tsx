@@ -122,27 +122,27 @@ const fragmentShader = `
     }
     
     // Enhanced Futuristic Coloring
-    vec3 coreColor = color * 0.2; // Deeper holographic core
-    vec3 rimColor = color * 2.0;  // Extremely bright edges
+    vec3 coreColor = color * 0.35; // Brighter core for solid readability
+    vec3 rimColor = color * 1.6;  // Bright edges
     vec3 blendedColor = mix(coreColor, rimColor, fresnel);
     
     // Use the emissiveIntensity uniform (which lerps up on hover) to create a visual "fill" effect
     float hoverBoost = smoothstep(0.1, 0.7, emissiveIntensity);
     
-    vec3 finalColor = blendedColor + (color * scanLine * 1.5) + (color * noiseVal * 1.2) + (color * hoverBoost * 0.8);
+    vec3 finalColor = blendedColor + (color * scanLine * 1.0) + (color * noiseVal * 0.8) + (color * hoverBoost * 0.6);
     
-    // Adjust opacity: transparent center, opaque edges
-    float baseOpacity = fresnel * 0.8 + scanLine * 0.5 + noiseVal * 0.4;
-    float finalOpacity = (baseOpacity + hoverBoost * 0.6) * opacity;
-    finalOpacity = clamp(finalOpacity, 0.05, 1.0);
+    // Adjust opacity: add a baseline of 0.4 so the physical volume of the body part is easily seen!
+    float baseOpacity = 0.4 + (fresnel * 0.6) + (scanLine * 0.3) + (noiseVal * 0.3);
+    float finalOpacity = (baseOpacity + hoverBoost * 0.4) * opacity;
+    finalOpacity = clamp(finalOpacity, 0.15, 1.0); // Minimum 15% opacity to never vanish
     
-    // Darker inside for non-organs (bones) to let them look like x-ray ghosts
+    // Bones are just as important to see, so dim them only slightly
     if (isOrgan < 0.5) {
-       finalOpacity *= 0.6 + (hoverBoost * 0.4); // Less ghosting if hovered
+       finalOpacity *= 0.85 + (hoverBoost * 0.15); 
     }
 
     // emissiveIntensity boosts the overall brightness
-    gl_FragColor = vec4(finalColor * emissiveIntensity * 2.5, finalOpacity);
+    gl_FragColor = vec4(finalColor * emissiveIntensity * 2.0, finalOpacity);
   }
 `;
 
@@ -231,8 +231,8 @@ const BodyPart3D = ({ part, isSelected, isFiltered, onSelect, onHover, isHovered
     if (!groupRef.current) return;
     const t = state.clock.elapsedTime + timeOffset;
 
-    const targetEmissive = isSelected ? 1.0 : (localHover || isHovered) ? 0.8 : 0.05;
-    const targetOpacity = isFiltered ? 1.0 : ((localHover || isHovered) ? 0.8 : 0.04);
+    const targetEmissive = isSelected ? 1.0 : (localHover || isHovered) ? 0.8 : 0.35;
+    const targetOpacity = isFiltered ? 1.0 : ((localHover || isHovered) ? 0.8 : 0.08);
 
     groupRef.current.traverse((child) => {
       if ((child as THREE.Mesh).isMesh || (child as THREE.InstancedMesh).isInstancedMesh) {
