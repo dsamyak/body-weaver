@@ -1,6 +1,6 @@
-import { useRef } from 'react';
+import { Suspense, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Environment, ContactShadows, Float } from '@react-three/drei';
+import { OrbitControls, Environment, ContactShadows, Float, Html, useProgress } from '@react-three/drei';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import BodyPart3D from './BodyPart3D';
@@ -13,6 +13,18 @@ interface HumanBodySceneProps {
   onSelectPart: (id: string) => void;
   onHoverPart: (id: string | null) => void;
 }
+
+const Loader = () => {
+  const { progress } = useProgress();
+  return (
+    <Html center>
+      <div className="flex flex-col items-center justify-center gap-4">
+        <div className="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+        <div className="text-primary font-bold tracking-widest uppercase text-sm drop-shadow-md">{progress.toFixed(0)}% LOADED</div>
+      </div>
+    </Html>
+  );
+};
 
 // Animated particle field for atmosphere
 const ParticleField = () => {
@@ -86,22 +98,24 @@ const HumanBodyScene = ({ selectedPart, hoveredPart, activeSystem, onSelectPart,
       <AnimatedLights />
       <ParticleField />
 
-      <Float speed={0.8} rotationIntensity={0.05} floatIntensity={0.15} floatingRange={[-0.05, 0.05]}>
-        <group>
-          {bodyPartsData.map((part) => (
-            <BodyPart3D
-              key={part.id}
-              part={part}
-              isSelected={selectedPart === part.id}
-              hasSelection={!!selectedPart}
-              isFiltered={activeSystem === 'all' || part.system.includes(activeSystem)}
-              onSelect={onSelectPart}
-              onHover={onHoverPart}
-              isHovered={hoveredPart === part.id}
-            />
-          ))}
-        </group>
-      </Float>
+      <Suspense fallback={<Loader />}>
+        <Float speed={0.8} rotationIntensity={0.05} floatIntensity={0.15} floatingRange={[-0.05, 0.05]}>
+          <group>
+            {bodyPartsData.map((part) => (
+              <BodyPart3D
+                key={part.id}
+                part={part}
+                isSelected={selectedPart === part.id}
+                hasSelection={!!selectedPart}
+                isFiltered={activeSystem === 'all' || part.system.includes(activeSystem)}
+                onSelect={onSelectPart}
+                onHover={onHoverPart}
+                isHovered={hoveredPart === part.id}
+              />
+            ))}
+          </group>
+        </Float>
+      </Suspense>
 
       <ContactShadows position={[0, -1.7, 0]} opacity={0.5} scale={12} blur={2.5} far={4} />
       <OrbitControls

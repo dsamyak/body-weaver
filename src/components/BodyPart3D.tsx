@@ -1,5 +1,6 @@
 import { useRef, useState, useMemo, useLayoutEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
+import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 import { BodyPartData } from '@/data/bodyParts';
 
@@ -218,6 +219,25 @@ const RibcageInstances = ({ material }: { material: any }) => {
   );
 };
 
+const GLTFModelRenderer = ({ modelPath, renderMaterial }: { modelPath: string; renderMaterial: () => JSX.Element }) => {
+  const { nodes } = useGLTF(modelPath) as any;
+  
+  return (
+    <group>
+      {Object.values(nodes).map((node: any) => {
+        if (node.isMesh) {
+          return (
+            <mesh key={node.uuid} geometry={node.geometry} position={node.position} rotation={node.rotation} scale={node.scale}>
+              {renderMaterial()}
+            </mesh>
+          );
+        }
+        return null;
+      })}
+    </group>
+  );
+};
+
 const BodyPart3D = ({ part, isSelected, hasSelection, isFiltered, onSelect, onHover, isHovered }: BodyPart3DProps) => {
   const groupRef = useRef<THREE.Group>(null);
   const [localHover, setLocalHover] = useState(false);
@@ -320,6 +340,10 @@ const BodyPart3D = ({ part, isSelected, hasSelection, isFiltered, onSelect, onHo
   };
 
   const renderGeometry = () => {
+    if (part.modelPath) {
+      return <GLTFModelRenderer modelPath={part.modelPath} renderMaterial={() => renderMaterial()} />;
+    }
+
     switch (part.id) {
       case 'brain':
         return (
