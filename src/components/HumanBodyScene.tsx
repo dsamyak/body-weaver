@@ -118,11 +118,12 @@ const HumanBodyScene = ({ selectedPart, hoveredPart, activeSystem, onSelectPart,
       <Environment preset="city" />
       <fog attach="fog" args={['#0a1020', 8, 20]} />
 
-      <EffectComposer disableNormalPass>
+      <EffectComposer>
         <Bloom 
-          luminanceThreshold={0.5} 
+          luminanceThreshold={0.85} 
+          luminanceSmoothing={0.1}
           mipmapBlur 
-          intensity={1.2} 
+          intensity={1.8} 
         />
       </EffectComposer>
     </Canvas>
