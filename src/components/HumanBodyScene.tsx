@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, ContactShadows, Float } from '@react-three/drei';
+import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import BodyPart3D from './BodyPart3D';
 import { bodyPartsData } from '@/data/bodyParts';
@@ -116,6 +117,14 @@ const HumanBodyScene = ({ selectedPart, hoveredPart, activeSystem, onSelectPart,
       />
       <Environment preset="city" />
       <fog attach="fog" args={['#0a1020', 8, 20]} />
+
+      <EffectComposer disableNormalPass>
+        <Bloom 
+          luminanceThreshold={0.5} 
+          mipmapBlur 
+          intensity={1.2} 
+        />
+      </EffectComposer>
     </Canvas>
   );
 };

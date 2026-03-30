@@ -20,36 +20,74 @@ const BodyPartPanel = ({ part, onClose }: BodyPartPanelProps) => {
     <AnimatePresence>
       {part && (
         <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 30 }}
-          transition={{ duration: 0.3, ease: 'easeOut' }}
-          className="absolute top-4 right-4 w-80 bg-card/90 backdrop-blur-xl border border-border rounded-xl p-5 shadow-2xl z-10"
+          initial={{ opacity: 0, x: 40, scale: 0.95, filter: 'blur(10px)' }}
+          animate={{ opacity: 1, x: 0, scale: 1, filter: 'blur(0px)' }}
+          exit={{ opacity: 0, x: 40, scale: 0.95, filter: 'blur(10px)' }}
+          transition={{ duration: 0.4, type: 'spring', damping: 25, stiffness: 200 }}
+          className="absolute top-6 right-6 w-80 glass-panel rounded-2xl p-6 shadow-[0_0_40px_rgba(0,0,0,0.5)] z-10 overflow-hidden"
         >
-          <button onClick={onClose} className="absolute top-3 right-3 text-muted-foreground hover:text-foreground transition-colors">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -z-10 translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 left-0 w-24 h-24 bg-accent/10 rounded-full blur-2xl -z-10 -translate-x-1/2 translate-y-1/2" />
+          
+          <button onClick={onClose} className="absolute top-4 right-4 text-muted-foreground/60 hover:text-white transition-colors bg-white/5 hover:bg-white/10 p-1.5 rounded-full backdrop-blur-md">
             <X className="w-4 h-4" />
           </button>
 
-          <div className="flex items-center gap-2 mb-1">
-            {systemIcons[part.system] || <Activity className="w-4 h-4 text-primary" />}
-            <span className="text-xs uppercase tracking-widest text-primary font-medium">{part.system}</span>
-          </div>
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ delay: 0.1 }}
+            className="flex items-center gap-2 mb-2"
+          >
+            <div className="p-1.5 rounded-md bg-primary/20 text-primary border border-primary/30 shadow-[0_0_10px_rgba(var(--glow-primary),0.3)]">
+              {systemIcons[part.system] || <Activity className="w-4 h-4" />}
+            </div>
+            <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-primary/90">{part.system}</span>
+          </motion.div>
 
-          <h2 className="text-lg font-bold text-foreground mb-2">{part.name}</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed mb-4">{part.description}</p>
+          <motion.h2 
+            initial={{ opacity: 0, x: -10 }} 
+            animate={{ opacity: 1, x: 0 }} 
+            transition={{ delay: 0.15 }}
+            className="text-2xl font-bold text-white mb-3 tracking-tight"
+          >
+            {part.name}
+          </motion.h2>
+          
+          <motion.p 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            transition={{ delay: 0.2 }}
+            className="text-sm text-foreground/80 leading-relaxed mb-6 font-medium"
+          >
+            {part.description}
+          </motion.p>
 
-          <div className="space-y-2">
-            <h3 className="text-xs uppercase tracking-widest text-primary font-medium mb-2">Key Facts</h3>
+          <div className="space-y-3">
+            <motion.h3 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              transition={{ delay: 0.25 }}
+              className="text-[10px] uppercase font-bold tracking-[0.15em] text-muted-foreground mb-3 flex items-center gap-2"
+            >
+              <span className="bg-white/10 h-px flex-1" />
+              Key Facts
+              <span className="bg-white/10 h-px flex-1" />
+            </motion.h3>
+            
             {part.details.map((detail, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.08 }}
-                className="flex items-start gap-2 text-sm text-secondary-foreground"
+                initial={{ opacity: 0, x: 20, filter: 'blur(5px)' }}
+                animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                transition={{ delay: 0.3 + i * 0.1, type: 'spring', stiffness: 200, damping: 20 }}
+                className="flex items-start gap-3 text-sm text-foreground/90 bg-white/5 p-3 rounded-xl border border-white/5 hover:bg-white/10 hover:border-white/10 transition-colors group"
               >
-                <span className="w-1 h-1 rounded-full bg-primary mt-2 shrink-0" />
-                {detail}
+                <div className="mt-1 relative">
+                  <span className="block w-1.5 h-1.5 rounded-full bg-primary/80 group-hover:scale-125 transition-transform" />
+                  <span className="absolute inset-0 w-1.5 h-1.5 rounded-full bg-primary/40 animate-ping" />
+                </div>
+                <span className="leading-snug">{detail}</span>
               </motion.div>
             ))}
           </div>
