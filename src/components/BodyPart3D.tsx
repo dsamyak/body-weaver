@@ -31,7 +31,7 @@ const vertexShader = `
     #include <beginnormal_vertex>
     #include <defaultnormal_vertex>
     #include <begin_vertex>
-    #include <instancing_vertex>
+    // project_vertex calculates mvPosition and gl_Position
     #include <project_vertex>
     
     // We compute local position for scanning based on object space before transform
@@ -39,8 +39,6 @@ const vertexShader = `
     
     vNormal = normalize(transformedNormal);
     vViewPosition = -mvPosition.xyz;
-    
-    gl_Position = projectionMatrix * mvPosition;
   }
 `;
 
@@ -263,12 +261,13 @@ const BodyPart3D = ({ part, isSelected, isFiltered, onSelect, onHover, isHovered
     );
   });
 
-  const renderMaterial = () => {
+  const renderMaterial = (isInstanced = false) => {
     return (
       <shaderMaterial
         transparent
         depthWrite={false}
         blending={THREE.AdditiveBlending}
+        instancing={isInstanced}
         uniforms={{
           time: { value: 0 },
           color: { value: new THREE.Color(part.color) },
@@ -322,9 +321,9 @@ const BodyPart3D = ({ part, isSelected, isFiltered, onSelect, onHover, isHovered
           </>
         );
       case 'ribcage':
-        return <RibcageInstances material={renderMaterial()} />;
+        return <RibcageInstances material={renderMaterial(true)} />;
       case 'spine':
-        return <SpineInstances material={renderMaterial()} />;
+        return <SpineInstances material={renderMaterial(true)} />;
       case 'stomach':
       case 'liver':
         return (
