@@ -37,7 +37,6 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'sphere',
     color: '#cc44ff',
     details: ['~86 billion neurons', 'Weighs ~1.4 kg', 'Uses 20% of body oxygen', '3 main parts: cerebrum, cerebellum, brainstem'],
-    modelPath: '/models/brain.glb',
   },
   {
     id: 'eyes',
