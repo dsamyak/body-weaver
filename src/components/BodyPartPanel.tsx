@@ -103,6 +103,37 @@ const BodyPartPanel = ({ part, onClose }: BodyPartPanelProps) => {
                 </motion.div>
               ))}
             </div>
+
+            {part.subParts && part.subParts.length > 0 && (
+              <div className="space-y-3 mt-6">
+                <motion.h3 
+                  initial={{ opacity: 0 }} 
+                  animate={{ opacity: 1 }} 
+                  transition={{ delay: 0.35 }}
+                  className="text-[10px] uppercase font-bold tracking-[0.15em] text-muted-foreground mb-3 flex items-center gap-2"
+                >
+                  <span className="bg-white/10 h-px flex-1" />
+                  Sub-Structures
+                  <span className="bg-white/10 h-px flex-1" />
+                </motion.h3>
+                
+                {part.subParts.map((sub, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: 20, filter: 'blur(5px)' }}
+                    animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                    transition={{ delay: 0.4 + i * 0.1, type: 'spring', stiffness: 200, damping: 20 }}
+                    className="flex flex-col gap-1.5 text-sm bg-white/5 p-3.5 rounded-xl border border-white/5 hover:bg-white/10 hover:border-white/10 transition-colors group"
+                  >
+                    <span className="font-semibold text-primary/90 flex items-center gap-2">
+                       <span className="block w-1.5 h-1.5 rounded-full bg-primary/80" />
+                       {sub.name}
+                    </span>
+                    <span className="text-foreground/70 text-[13px] pl-3.5 leading-relaxed">{sub.description}</span>
+                  </motion.div>
+                ))}
+              </div>
+            )}
           </div>
         </motion.div>
       )}

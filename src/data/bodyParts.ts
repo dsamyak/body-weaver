@@ -1,3 +1,8 @@
+export interface SubPartData {
+  name: string;
+  description: string;
+}
+
 export interface BodyPartData {
   id: string;
   name: string;
@@ -10,6 +15,7 @@ export interface BodyPartData {
   color: string;
   details: string[];
   modelPath?: string;
+  subParts?: SubPartData[];
 }
 
 export const bodyPartsData: BodyPartData[] = [
@@ -25,6 +31,11 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'sphere',
     color: '#00b8ff',
     details: ['Contains 22 bones', 'Protects the brain', 'Houses sensory organs', 'Weight: ~1 kg'],
+    subParts: [
+      { name: 'Cranial Vault', description: 'The upper part forming the enclosure for the brain.' },
+      { name: 'Facial Skeleton', description: 'Forms the highly complex structure of the face.' },
+      { name: 'Mandible', description: 'The lower jawbone, the only movable bone of the skull.' }
+    ]
   },
   {
     id: 'brain',
@@ -37,6 +48,12 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'sphere',
     color: '#cc44ff',
     details: ['~86 billion neurons', 'Weighs ~1.4 kg', 'Uses 20% of body oxygen', '3 main parts: cerebrum, cerebellum, brainstem'],
+    subParts: [
+      { name: 'Cerebrum', description: 'Handles conscious thought, language, and voluntary movement.' },
+      { name: 'Cerebellum', description: 'Coordinates fine muscle movement, balance, and posture.' },
+      { name: 'Brainstem', description: 'Controls automatic functions like breathing, heart rate, and blood pressure.' },
+      { name: 'Diencephalon', description: 'Contains the thalamus and hypothalamus; relays sensory info and controls homeostasis.' }
+    ]
   },
   {
     id: 'eyes',
@@ -49,6 +66,12 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'box',
     color: '#ffffff',
     details: ['~576 megapixels equivalent', '6 extraocular muscles each', 'Can distinguish ~10M colors', 'Blinks ~15-20 times/min'],
+    subParts: [
+      { name: 'Cornea', description: 'The clear front surface that focuses light entering the eye.' },
+      { name: 'Lens', description: 'Focuses light precisely onto the retina.' },
+      { name: 'Retina', description: 'The light-sensitive inner lining containing photoreceptors (rods and cones).' },
+      { name: 'Optic Nerve', description: 'Transmits visual information from the retina to the brain.' }
+    ]
   },
   {
     id: 'neck',
@@ -61,6 +84,12 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'cylinder',
     color: '#00b8ff',
     details: ['7 cervical vertebrae', 'Contains carotid arteries', 'Houses the trachea & esophagus', 'Supports ~5 kg head'],
+    subParts: [
+      { name: 'Cervical Vertebrae', description: 'The 7 bones providing structural support for the neck.' },
+      { name: 'Trachea', description: 'The windpipe connecting the larynx to the bronchi.' },
+      { name: 'Esophagus', description: 'The muscular tube connecting the throat with the stomach.' },
+      { name: 'Thyroid Gland', description: 'Endocrine gland that regulates metabolism.' }
+    ]
   },
 
   // Torso
@@ -75,6 +104,11 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'box',
     color: '#0088cc',
     details: ['12 pairs of ribs', 'Protects heart & lungs', 'Aids in breathing', 'Connected to thoracic vertebrae'],
+    subParts: [
+      { name: 'Sternum', description: 'The flat bone at the center of the chest (breastbone).' },
+      { name: 'True Ribs', description: 'First 7 pairs, attached directly to the sternum.' },
+      { name: 'False & Floating Ribs', description: 'Lower 5 pairs, attaching indirectly or not at all to the sternum.' }
+    ]
   },
   {
     id: 'heart',
@@ -87,6 +121,12 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'sphere',
     color: '#ff1155',
     details: ['Beats ~100,000 times/day', '4 chambers', 'Pumps ~5L blood/min', 'Weight: ~300g'],
+    subParts: [
+      { name: 'Atria', description: 'The two upper receiving chambers for blood.' },
+      { name: 'Ventricles', description: 'The two lower discharging chambers that pump blood out.' },
+      { name: 'Heart Valves', description: 'Prevent the backward flow of blood.' },
+      { name: 'Aorta', description: 'The main artery carrying oxygenated blood away from the heart.' }
+    ]
   },
   {
     id: 'lungs',
@@ -99,6 +139,11 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'box',
     color: '#00ffcc',
     details: ['~300 million alveoli', 'Surface area: ~70 m²', 'Right lung has 3 lobes', 'Left lung has 2 lobes'],
+    subParts: [
+      { name: 'Trachea & Bronchi', description: 'The airways leading down into the lungs.' },
+      { name: 'Alveoli', description: 'Microscopic air sacs where gas exchange occurs.' },
+      { name: 'Pleura', description: 'The membranes enclosing the lungs.' }
+    ]
   },
   {
     id: 'spine',
@@ -111,6 +156,12 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'cylinder',
     color: '#0088cc',
     details: ['33 vertebrae', '4 natural curves', 'Protects spinal cord', 'Allows flexibility & movement'],
+    subParts: [
+      { name: 'Cervical Region', description: 'The neck region (C1-C7).' },
+      { name: 'Thoracic Region', description: 'The mid-back region articulating with the ribs (T1-T12).' },
+      { name: 'Lumbar Region', description: 'The lower back region supporting upper body weight (L1-L5).' },
+      { name: 'Sacrum & Coccyx', description: 'The fused lower regions connecting to the pelvis.' }
+    ]
   },
   {
     id: 'stomach',
@@ -123,6 +174,12 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'sphere',
     color: '#ff8800',
     details: ['Capacity: ~1 liter', 'pH of gastric acid: 1.5-3.5', 'Churns food 3x/min', 'Lined with mucus membrane'],
+    subParts: [
+      { name: 'Cardia', description: 'Where food enters from the esophagus.' },
+      { name: 'Fundus', description: 'The upper rounded part, storing undigested food and gases.' },
+      { name: 'Body (Corpus)', description: 'The main, central region for churning and mixing.' },
+      { name: 'Pylorus', description: 'The valve that connects the stomach to the small intestine.' }
+    ]
   },
   {
     id: 'liver',
@@ -135,6 +192,12 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'box',
     color: '#ffcc00',
     details: ['Weighs ~1.5 kg', '500+ functions', 'Produces bile', 'Can regenerate itself'],
+    subParts: [
+      { name: 'Right Lobe', description: 'The largest lobe of the liver.' },
+      { name: 'Left Lobe', description: 'Smaller and flatter than the right lobe.' },
+      { name: 'Gallbladder', description: 'Sits under the liver; stores and concentrates bile.' },
+      { name: 'Hepatic Portal Vein', description: 'Carries nutrient-rich blood from the digestive tract to the liver.' }
+    ]
   },
   {
     id: 'kidneys',
@@ -147,6 +210,12 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'box',
     color: '#ff4400',
     details: ['Filter ~180L blood/day', '~1 million nephrons each', 'Produce 1-2L urine/day', 'Regulate blood pressure'],
+    subParts: [
+      { name: 'Renal Cortex', description: 'The outer region containing millions of filtering nephrons.' },
+      { name: 'Renal Medulla', description: 'The inner region containing the renal pyramids.' },
+      { name: 'Renal Pelvis', description: 'The funnel-like dilated part of the ureter in the kidney.' },
+      { name: 'Ureters', description: 'Tubes carrying urine from the kidneys to the bladder.' }
+    ]
   },
   {
     id: 'intestines',
@@ -159,6 +228,12 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'box',
     color: '#ffaa33',
     details: ['Small intestine: ~6m long', 'Large intestine: ~1.5m', 'Surface area: ~32 m²', '~100 trillion gut bacteria'],
+    subParts: [
+      { name: 'Duodenum', description: 'The first part of the small intestine; receives bile and pancreatic juice.' },
+      { name: 'Jejunum & Ileum', description: 'The remaining sections of the small intestine where most absorption occurs.' },
+      { name: 'Colon', description: 'The main part of the large intestine; extracts water and salt.' },
+      { name: 'Rectum', description: 'The final section of the large intestine, terminating at the anus.' }
+    ]
   },
   {
     id: 'pelvis',
@@ -171,6 +246,11 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'box',
     color: '#0088cc',
     details: ['3 fused bones per side', 'Supports body weight', 'Protects reproductive organs', 'Differs between sexes'],
+    subParts: [
+      { name: 'Ilium', description: 'The largest and uppermost pelvic bone.' },
+      { name: 'Ischium', description: 'The lower, back part of the pelvic bone.' },
+      { name: 'Pubis', description: 'The forward portion of the pelvic bone.' }
+    ]
   },
 
   // Arms
@@ -185,6 +265,11 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'sphere',
     color: '#00b8ff',
     details: ['Ball-and-socket joint', '4 rotator cuff muscles', '360° range of motion', 'Most commonly dislocated joint'],
+    subParts: [
+      { name: 'Clavicle', description: 'The collarbone, acting as a strut.' },
+      { name: 'Scapula', description: 'The shoulder blade, connecting the humerus with the clavicle.' },
+      { name: 'Rotator Cuff', description: 'Group of muscles and their tendons acting to stabilize the shoulder.' }
+    ]
   },
   {
     id: 'left-shoulder',
@@ -197,6 +282,11 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'sphere',
     color: '#00b8ff',
     details: ['Ball-and-socket joint', '4 rotator cuff muscles', '360° range of motion', 'Most commonly dislocated joint'],
+    subParts: [
+      { name: 'Clavicle', description: 'The collarbone, acting as a strut.' },
+      { name: 'Scapula', description: 'The shoulder blade, connecting the humerus with the clavicle.' },
+      { name: 'Rotator Cuff', description: 'Group of muscles and their tendons acting to stabilize the shoulder.' }
+    ]
   },
   {
     id: 'right-upper-arm',
@@ -209,6 +299,11 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'cylinder',
     color: '#00b8ff',
     details: ['Contains humerus bone', 'Biceps & triceps muscles', 'Brachial artery', 'Major nerve pathways'],
+    subParts: [
+      { name: 'Humerus', description: 'The long bone in the upper arm.' },
+      { name: 'Biceps Brachii', description: 'Muscle on the front of the upper arm, primarily for flexing the elbow.' },
+      { name: 'Triceps Brachii', description: 'Muscle on the back of the upper arm, primarily for extending the elbow.' }
+    ]
   },
   {
     id: 'left-upper-arm',
@@ -221,6 +316,11 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'cylinder',
     color: '#00b8ff',
     details: ['Contains humerus bone', 'Biceps & triceps muscles', 'Brachial artery', 'Major nerve pathways'],
+    subParts: [
+      { name: 'Humerus', description: 'The long bone in the upper arm.' },
+      { name: 'Biceps Brachii', description: 'Muscle on the front of the upper arm, primarily for flexing the elbow.' },
+      { name: 'Triceps Brachii', description: 'Muscle on the back of the upper arm, primarily for extending the elbow.' }
+    ]
   },
   {
     id: 'right-forearm',
@@ -233,6 +333,11 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'cylinder',
     color: '#00b8ff',
     details: ['Radius & ulna bones', 'Allows pronation/supination', '20+ muscles', 'Contains radial artery'],
+    subParts: [
+      { name: 'Radius', description: 'The bone on the thumb side of the forearm.' },
+      { name: 'Ulna', description: 'The bone on the pinky finger side of the forearm.' },
+      { name: 'Flexors & Extensors', description: 'Muscle groups managing hand and wrist articulation.' }
+    ]
   },
   {
     id: 'left-forearm',
@@ -245,6 +350,11 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'cylinder',
     color: '#00b8ff',
     details: ['Radius & ulna bones', 'Allows pronation/supination', '20+ muscles', 'Contains radial artery'],
+    subParts: [
+      { name: 'Radius', description: 'The bone on the thumb side of the forearm.' },
+      { name: 'Ulna', description: 'The bone on the pinky finger side of the forearm.' },
+      { name: 'Flexors & Extensors', description: 'Muscle groups managing hand and wrist articulation.' }
+    ]
   },
   {
     id: 'right-hand',
@@ -257,6 +367,11 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'box',
     color: '#00b8ff',
     details: ['27 bones', '34 muscles', '~17,000 touch receptors', 'Most dexterous body part'],
+    subParts: [
+      { name: 'Carpals', description: 'The 8 wrist bones.' },
+      { name: 'Metacarpals', description: 'The 5 bones of the mid-hand.' },
+      { name: 'Phalanges', description: 'The 14 bones making up the fingers and thumb.' }
+    ]
   },
   {
     id: 'left-hand',
@@ -269,6 +384,11 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'box',
     color: '#00b8ff',
     details: ['27 bones', '34 muscles', '~17,000 touch receptors', 'Most dexterous body part'],
+    subParts: [
+      { name: 'Carpals', description: 'The 8 wrist bones.' },
+      { name: 'Metacarpals', description: 'The 5 bones of the mid-hand.' },
+      { name: 'Phalanges', description: 'The 14 bones making up the fingers and thumb.' }
+    ]
   },
 
   // Legs
@@ -283,6 +403,11 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'cylinder',
     color: '#00b8ff',
     details: ['Femur: longest bone', 'Quadriceps & hamstrings', 'Femoral artery', 'Supports body weight'],
+    subParts: [
+      { name: 'Femur', description: 'The thigh bone, the longest and strongest in the body.' },
+      { name: 'Quadriceps', description: 'Group of 4 muscles on the front of the thigh.' },
+      { name: 'Hamstrings', description: 'Group of 3 muscles on the back of the thigh.' }
+    ]
   },
   {
     id: 'left-thigh',
@@ -295,6 +420,11 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'cylinder',
     color: '#00b8ff',
     details: ['Femur: longest bone', 'Quadriceps & hamstrings', 'Femoral artery', 'Supports body weight'],
+    subParts: [
+      { name: 'Femur', description: 'The thigh bone, the longest and strongest in the body.' },
+      { name: 'Quadriceps', description: 'Group of 4 muscles on the front of the thigh.' },
+      { name: 'Hamstrings', description: 'Group of 3 muscles on the back of the thigh.' }
+    ]
   },
   {
     id: 'right-knee',
@@ -307,6 +437,11 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'sphere',
     color: '#0088cc',
     details: ['Largest joint', 'Contains patella (kneecap)', '4 major ligaments', 'Meniscus for cushioning'],
+    subParts: [
+      { name: 'Patella', description: 'The kneecap, a thick, circular-triangular bone.' },
+      { name: 'Meniscus', description: 'C-shaped pieces of tough, rubbery cartilage acting as shock absorbers.' },
+      { name: 'Cruciate Ligaments (ACL/PCL)', description: 'Cross inside the knee joint, controlling back-and-forth motion.' }
+    ]
   },
   {
     id: 'left-knee',
@@ -319,6 +454,11 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'sphere',
     color: '#0088cc',
     details: ['Largest joint', 'Contains patella (kneecap)', '4 major ligaments', 'Meniscus for cushioning'],
+    subParts: [
+      { name: 'Patella', description: 'The kneecap, a thick, circular-triangular bone.' },
+      { name: 'Meniscus', description: 'C-shaped pieces of tough, rubbery cartilage acting as shock absorbers.' },
+      { name: 'Cruciate Ligaments (ACL/PCL)', description: 'Cross inside the knee joint, controlling back-and-forth motion.' }
+    ]
   },
   {
     id: 'right-lower-leg',
@@ -331,6 +471,11 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'cylinder',
     color: '#00b8ff',
     details: ['Tibia & fibula bones', 'Calf muscles (gastrocnemius)', 'Achilles tendon', 'Bears full body weight'],
+    subParts: [
+      { name: 'Tibia', description: 'The shinbone, larger and stronger, bears most of the weight.' },
+      { name: 'Fibula', description: 'The calf bone, smaller, located on the outer side.' },
+      { name: 'Gastrocnemius & Soleus', description: 'The major calf muscles that connect to the Achilles tendon.' }
+    ]
   },
   {
     id: 'left-lower-leg',
@@ -343,6 +488,11 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'cylinder',
     color: '#00b8ff',
     details: ['Tibia & fibula bones', 'Calf muscles (gastrocnemius)', 'Achilles tendon', 'Bears full body weight'],
+    subParts: [
+      { name: 'Tibia', description: 'The shinbone, larger and stronger, bears most of the weight.' },
+      { name: 'Fibula', description: 'The calf bone, smaller, located on the outer side.' },
+      { name: 'Gastrocnemius & Soleus', description: 'The major calf muscles that connect to the Achilles tendon.' }
+    ]
   },
   {
     id: 'right-foot',
@@ -355,6 +505,11 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'box',
     color: '#00b8ff',
     details: ['26 bones', '33 joints', '~8,000 steps/day avg', '3 arches for support'],
+    subParts: [
+      { name: 'Tarsals', description: 'The 7 bones composing the ankle and heel, including the calcaneus (heel bone).' },
+      { name: 'Metatarsals', description: 'The 5 long bones of the mid-foot.' },
+      { name: 'Phalanges', description: 'The 14 toe bones.' }
+    ]
   },
   {
     id: 'left-foot',
@@ -367,6 +522,11 @@ export const bodyPartsData: BodyPartData[] = [
     shape: 'box',
     color: '#00b8ff',
     details: ['26 bones', '33 joints', '~8,000 steps/day avg', '3 arches for support'],
+    subParts: [
+      { name: 'Tarsals', description: 'The 7 bones composing the ankle and heel, including the calcaneus (heel bone).' },
+      { name: 'Metatarsals', description: 'The 5 long bones of the mid-foot.' },
+      { name: 'Phalanges', description: 'The 14 toe bones.' }
+    ]
   },
 ];
 
