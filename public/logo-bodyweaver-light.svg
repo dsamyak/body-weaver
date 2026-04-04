@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 240" width="100%" height="100%">
+  <defs>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="100%" stop-color="#4facfe" />
+    </linearGradient>
+    <linearGradient id="cyanBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="100%" stop-color="#4facfe" />
+    </linearGradient>
+    <linearGradient id="purplePink" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f093fb" />
+      <stop offset="100%" stop-color="#f5576c" />
+    </linearGradient>
+  </defs>
+
+  <!-- Symbol: Woven DNA forming abstract torso/head -->
+  <g transform="translate(40, 10)">
+    <!-- Crisp Lines Foreground Layer -->
+    <path d="M 100 55 C 160 75, 160 105, 100 130 C 50 155, 50 185, 100 210" stroke="url(#cyanBlue)" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <path d="M 100 55 C 40 75, 40 105, 100 130 C 150 155, 150 185, 100 210" stroke="url(#purplePink)" stroke-width="12" fill="none" stroke-linecap="round"/>
+    
+    <!-- Central Core Elements -->
+    <circle cx="100" cy="25" r="14" fill="url(#cyanBlue)" />
+    <circle cx="100" cy="130" r="6" fill="#0f172a" opacity="0.9" />
+  </g>
+
+  <!-- Typography -->
+  <text x="240" y="135" font-family="'Inter', system-ui, -apple-system, sans-serif" font-size="72" font-weight="900" fill="#0f172a" letter-spacing="-2">
+    BODY<tspan fill="url(#textGrad)" font-weight="400">WEAVER</tspan>
+  </text>
+  <text x="245" y="170" font-family="'Inter', system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" fill="#64748b" letter-spacing="6">
+    3D ANATOMY EXPLORER
+  </text>
+</svg>
